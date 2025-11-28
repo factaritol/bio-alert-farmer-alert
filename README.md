@@ -1,23 +1,26 @@
 # 🌾 Bio-IT Farmer Alert System
 
-**Deploy in 60 seconds - NO cloud accounts needed:**
-
 [![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
 
-## Features
-✅ **DeepSeek-Math-V2** for medical-grade certainty scoring  
-✅ **Twilio SMS** to Hong Kong farmers (no phone verification needed)  
-✅ **Zero cloud account setup** - just click and deploy  
-✅ **Offline fallback** if APIs are down  
+## ✅ ONE-CLICK DEPLOY (NO CLOUD ACCOUNTS!)
+1. Click the **Deploy to Render** button above
+2. Create free Render account (email only - no phone verification)
+3. Fork this repo to your GitHub
+4. Connect your forked repo to Render
+5. **Done!** Your API is live at `https://your-app.onrender.com`
 
-## Test after deploy
-```bash
-curl -X POST https://your-render-url.onrender.com/calculate-risk \
-  -H "Content-Type: application/json" \
-  -d '{
-    "farmer_id": "HK_FARMER_001",
-    "plasma_dha_pct": 2.5,
-    "mri_volume_norm": 0.35,
-    "phone_number": "+85291234567",
-    "village_name": "Lamma Island"
-  }'
+## 📱 TWILIO SETUP (FREE)
+1. Go to [twilio.com/labs/functions](https://www.twilio.com/labs/functions)
+2. Create free account (use email verification to avoid OTP loops)
+3. Create a new Function named "send-alert"
+4. Paste this code into the function:
+```javascript
+exports.handler = function(context, event, callback) {
+  const client = context.getTwilioClient();
+  client.messages.create({
+    to: event.to,
+    from: context.TWILIO_PHONE_NUMBER,
+    body: event.body
+  }).then(() => callback(null, {success: true}))
+   .catch(err => callback(err));
+};

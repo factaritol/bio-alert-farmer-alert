@@ -1,12 +1,6 @@
-
----
-
-### **⚙️ 2. AUTOMATIC DEPLOY CONFIG**  
-*(`.render.yaml` - Render.com detects this automatically)*
-```yaml
 services:
   - type: web
-    name: bio-it-farmer-alert
+    name: bio-alert-farmer
     env: python
     buildCommand: "pip install -r requirements.txt"
     startCommand: "uvicorn main:app --host 0.0.0.0 --port $PORT"
@@ -17,6 +11,4 @@ services:
         fromSecret: TWILIO_TOKEN
       - key: TWILIO_PHONE_NUMBER
         fromSecret: TWILIO_PHONE
-      - key: DEEPSEEK_API_KEY
-        fromSecret: DEEPSEEK_KEY  # Optional - fallback works without it
     plan: free
